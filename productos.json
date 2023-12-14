@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "cereal",
+    "description": "cereal",
+    "price": 140,
+    "thumbnail": "Sin imagen",
+    "code": "cereal20",
+    "stock": 40
+  },
+  {
+    "id": 2,
+    "title": "azucar",
+    "description": "Este es un producto de un paquete de azucar",
+    "price": 210,
+    "thumbnail": "Sin imagen",
+    "code": "azucar29",
+    "stock": 14
+  }
+]
