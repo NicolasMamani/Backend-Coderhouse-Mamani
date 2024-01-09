@@ -10,7 +10,16 @@ class ProductManager {
   }
   // método de agregar producto
   async addProduct(product) {
-    const { title, description, price, status = true, category, thumbnail, code, stock } = product;
+    const {
+      title,
+      description,
+      price,
+      status = true,
+      category,
+      thumbnail = 'Sin imagen',
+      code,
+      stock,
+    } = product;
 
     this.products = await this.readFile();
 
