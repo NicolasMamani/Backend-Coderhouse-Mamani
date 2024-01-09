@@ -40,9 +40,29 @@ router.post('/products', async (req, res) => {
   try {
     const productReq = req.body;
     const product = await manager.addProduct(productReq);
-    res.status(201).json(product);
+    res.status(201).json({ message: 'Producto agregado correctamente', product: product });
   } catch (error) {
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.put('/products/:pid', async (req, res) => {
+  try {
+    const id = parseInt(req.params.pid);
+    const productUpdate = await manager.updateProduct(id, req.body);
+    res.status(200).json({ message: 'Producto actualizado correctamente', product: productUpdate });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete('/products/:pid', async (req, res) => {
+  try {
+    const id = parseInt(req.params.pid);
+    const deletedProduct = await manager.deleteProduct(id);
+    res.status(200).json({ message: 'Producto eliminado correctamente', product: deletedProduct });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

@@ -17,12 +17,10 @@ class ProductManager {
     // validamos que todos los campos sean obligatorios
     if (!title || !description || !price || !thumbnail || !code || !stock || !category) {
       throw new Error('Todos los campos son obligatorios!!');
-      return;
     }
     // validamos que el campo code no este repetido
     if (this.products.some((product) => product.code === code)) {
       throw new Error('El código debe ser único');
-      return;
     }
 
     // obtenemos el ultimo id y lo asignamos a la clase
@@ -47,6 +45,7 @@ class ProductManager {
 
     // agregamo el nuevo producto al archivo
     await this.guardarArchivo(this.products);
+    return newProduct;
   }
 
   // método get productos
@@ -58,7 +57,9 @@ class ProductManager {
   async getProductById(idPametro) {
     try {
       const productos = await this.leerArchivo();
+      console.log('productos', productos);
       const encontrado = productos.find((item) => item.id === idPametro);
+      console.log('encontrado', encontrado);
       return encontrado || 'Producto no encontrado';
     } catch (error) {
       console.log('Problemas al leer el archivo ', error);
@@ -91,16 +92,17 @@ class ProductManager {
   // actualizar producto
   async updateProduct(idParam, productUpdate) {
     try {
-      const productos = await this.leerArchivo();
-      const index = productos.findIndex((i) => i.id == idParam);
+      const products = await this.leerArchivo();
+      const index = products.findIndex((i) => i.id == idParam);
       if (index != -1) {
-        productos.splice(index, 1, productUpdate);
-        await this.guardarArchivo(productos);
+        products.splice(index, 1, productUpdate);
+        await this.guardarArchivo(products);
+        return productUpdate;
       } else {
-        console.log('El id ingresado no fue encontrado');
+        throw new Error('El id ingresado no fue encontrado');
       }
     } catch (error) {
-      console.log('Error al actualizar el producto', error);
+      throw new Error('Error al actualizar el producto', error);
     }
   }
 
@@ -110,13 +112,14 @@ class ProductManager {
       let productos = await this.leerArchivo();
       const index = productos.findIndex((i) => i.id == idParam);
       if (index !== -1) {
-        productos = productos.filter((producto) => producto.id !== idParam);
+        const deletedProduct = productos.splice(index, 1)[0];
         await this.guardarArchivo(productos);
+        return deletedProduct;
       } else {
-        console.log('El id ingresado no fue encontrado');
+        throw new Error('El id ingresado no fue encontrado');
       }
     } catch (error) {
-      console.log('El id ingresado no es correcto');
+      throw new Error('El id ingresado no es correcto');
     }
   }
 

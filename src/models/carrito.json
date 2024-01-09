@@ -1,92 +1,19 @@
 [
   {
     "id": 0,
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
-    "thumbnail": "Sin imagen",
-    "code": "abc123",
-    "stock": 25
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 1
+      },
+      {
+        "productId": 2,
+        "quantity": 2
+      }
+    ]
   },
   {
     "id": 1,
-    "title": "arroz",
-    "description": "Este es un producto de arroz",
-    "price": 250,
-    "thumbnail": "Sin imagen",
-    "code": "arroz20",
-    "stock": 12
-  },
-  {
-    "id": 2,
-    "title": "azucar",
-    "description": "Este es un producto de un paquete de azucar",
-    "price": 210,
-    "thumbnail": "Sin imagen",
-    "code": "azucar29",
-    "stock": 14
-  },
-  {
-    "id": 3,
-    "title": "cereal",
-    "description": "cereal",
-    "price": 140,
-    "thumbnail": "Sin imagen",
-    "code": "cereal20",
-    "stock": 40
-  },
-  {
-    "id": 4,
-    "title": "leche",
-    "description": "Leche fresca",
-    "price": 180,
-    "thumbnail": "Sin imagen",
-    "code": "leche123",
-    "stock": 30
-  },
-  {
-    "id": 5,
-    "title": "pan",
-    "description": "Pan integral",
-    "price": 120,
-    "thumbnail": "Sin imagen",
-    "code": "pan456",
-    "stock": 20
-  },
-  {
-    "id": 6,
-    "title": "huevos",
-    "description": "Docena de huevos",
-    "price": 280,
-    "thumbnail": "Sin imagen",
-    "code": "huevos789",
-    "stock": 15
-  },
-  {
-    "id": 7,
-    "title": "pasta",
-    "description": "Pasta de trigo",
-    "price": 160,
-    "thumbnail": "Sin imagen",
-    "code": "pasta234",
-    "stock": 18
-  },
-  {
-    "id": 8,
-    "title": "aceite",
-    "description": "Aceite de oliva extra virgen",
-    "price": 300,
-    "thumbnail": "Sin imagen",
-    "code": "aceite567",
-    "stock": 10
-  },
-  {
-    "id": 9,
-    "title": "tomate",
-    "description": "Tomates frescos",
-    "price": 190,
-    "thumbnail": "Sin imagen",
-    "code": "tomate890",
-    "stock": 22
+    "products": []
   }
 ]
