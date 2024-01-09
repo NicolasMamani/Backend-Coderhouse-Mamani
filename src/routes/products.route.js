@@ -6,14 +6,14 @@ const manager = new ProductManager('src/models/productos.json');
 // get para productos con limit
 router.get('/products', async (req, res) => {
   try {
-    const limite = parseInt(req.query.limit);
-    const products = await manager.leerArchivo();
-    if (limite) {
-      let arrayConLimite = [];
-      for (let i = 0; i < limite; i++) {
-        arrayConLimite.push(products[i]);
+    const limit = parseInt(req.query.limit);
+    const products = await manager.readFile();
+    if (limit) {
+      let limitedArray = [];
+      for (let i = 0; i < limit; i++) {
+        limitedArray.push(products[i]);
       }
-      return res.send(arrayConLimite);
+      return res.send(limitedArray);
     }
     return res.send(products);
   } catch (error) {
@@ -25,9 +25,9 @@ router.get('/products', async (req, res) => {
 router.get('/products/:pid', async (req, res) => {
   try {
     const id = parseInt(req.params.pid);
-    const encontrado = await manager.getProductById(id);
-    if (encontrado && encontrado != 'Producto no encontrado') {
-      return res.send(encontrado);
+    const found = await manager.getProductById(id);
+    if (found && found != 'Producto no encontrado') {
+      return res.send(found);
     } else {
       res.status(404).json({ error: 'El producto no existe' });
     }

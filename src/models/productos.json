@@ -97,16 +97,5 @@
     "thumbnail": "Sin imagen",
     "code": "codigoNoPuesto111",
     "stock": 12
-  },
-  {
-    "id": 11,
-    "title": "Teclado T Dagger Bora",
-    "status": true,
-    "category": "tecnologia",
-    "description": "Este es un teclado mecanico y economico (copia de redragon)",
-    "price": 320,
-    "thumbnail": "Sin imagen",
-    "code": "tdagger-bora",
-    "stock": 11
   }
 ]

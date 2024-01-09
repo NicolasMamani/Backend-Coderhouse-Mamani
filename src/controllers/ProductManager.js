@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 class ProductManager {
-  static ultimoId = 0;
+  static lastId = 0;
   // Constructor
   constructor(path) {
     this.products = [];
@@ -12,7 +12,7 @@ class ProductManager {
   async addProduct(product) {
     const { title, description, price, status = true, category, thumbnail, code, stock } = product;
 
-    this.products = await this.leerArchivo();
+    this.products = await this.readFile();
 
     // validamos que todos los campos sean obligatorios
     if (!title || !description || !price || !thumbnail || !code || !stock || !category) {
@@ -24,12 +24,12 @@ class ProductManager {
     }
 
     // obtenemos el ultimo id y lo asignamos a la clase
-    const lastIdSaved = await this.obtenerUltimoId();
-    ProductManager.ultimoId = lastIdSaved + 1;
+    const lastIdSaved = await this.getLastId();
+    ProductManager.lastId = lastIdSaved + 1;
 
     // creamos productos para probar las clases
     const newProduct = {
-      id: ProductManager.ultimoId,
+      id: ProductManager.lastId,
       title: title,
       status: status,
       category: category,
@@ -44,7 +44,7 @@ class ProductManager {
     this.products.push(newProduct);
 
     // agregamo el nuevo producto al archivo
-    await this.guardarArchivo(this.products);
+    await this.saveFile(this.products);
     return newProduct;
   }
 
@@ -54,32 +54,30 @@ class ProductManager {
   }
 
   // método getProductById
-  async getProductById(idPametro) {
+  async getProductById(idParam) {
     try {
-      const productos = await this.leerArchivo();
-      console.log('productos', productos);
-      const encontrado = productos.find((item) => item.id === idPametro);
-      console.log('encontrado', encontrado);
-      return encontrado || 'Producto no encontrado';
+      const products = await this.readFile();
+      const found = products.find((item) => item.id === idParam);
+      return found || 'Producto no encontrado';
     } catch (error) {
       console.log('Problemas al leer el archivo ', error);
     }
   }
 
   //función para leer archivos
-  async leerArchivo() {
+  async readFile() {
     try {
       // convertimos
-      const respuesta = fs.readFileSync(this.path, 'utf-8');
+      const response = fs.readFileSync(this.path, 'utf-8');
       // convertimos la respuesta en un objeto de JavaScript
-      const arrayProductos = JSON.parse(respuesta);
-      return arrayProductos;
+      const productsArray = JSON.parse(response);
+      return productsArray;
     } catch (error) {
       console.log('Error al leer el archivo ', error);
     }
   }
 
-  async guardarArchivo(array) {
+  async saveFile(array) {
     try {
       // convertimos el array en una cadena en formato JSON
       const objetoJSON = JSON.stringify(array, null, 2);
@@ -92,11 +90,11 @@ class ProductManager {
   // actualizar producto
   async updateProduct(idParam, productUpdate) {
     try {
-      const products = await this.leerArchivo();
+      const products = await this.readFile();
       const index = products.findIndex((i) => i.id == idParam);
       if (index != -1) {
         products.splice(index, 1, productUpdate);
-        await this.guardarArchivo(products);
+        await this.saveFile(products);
         return productUpdate;
       } else {
         throw new Error('El id ingresado no fue encontrado');
@@ -109,11 +107,11 @@ class ProductManager {
   // eliminar producto
   async deleteProduct(idParam) {
     try {
-      let productos = await this.leerArchivo();
-      const index = productos.findIndex((i) => i.id == idParam);
+      let products = await this.readFile();
+      const index = products.findIndex((i) => i.id == idParam);
       if (index !== -1) {
-        const deletedProduct = productos.splice(index, 1)[0];
-        await this.guardarArchivo(productos);
+        const deletedProduct = products.splice(index, 1)[0];
+        await this.saveFile(products);
         return deletedProduct;
       } else {
         throw new Error('El id ingresado no fue encontrado');
@@ -123,9 +121,9 @@ class ProductManager {
     }
   }
 
-  async obtenerUltimoId() {
-    const productos = await this.leerArchivo();
-    return productos.length > 0 ? Math.max(...productos.map((producto) => producto.id)) : 0;
+  async getLastId() {
+    const products = await this.readFile();
+    return products.length > 0 ? Math.max(...products.map((product) => product.id)) : 0;
   }
 }
 

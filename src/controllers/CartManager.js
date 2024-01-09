@@ -13,14 +13,13 @@ class CartManager {
     const lastIdSaved = await this.getLastId();
     CartManager.lastId = lastIdSaved + 1;
 
-    console.log('Ultimo ID', CartManager.lastId);
     const newCart = {
       id: CartManager.lastId,
       products: [],
     };
 
     this.carts.push(newCart);
-    this.saveCart(this.carts);
+    this.saveCart();
     return newCart;
   }
 
@@ -43,8 +42,6 @@ class CartManager {
         return product.productId === productId;
       });
 
-      console.log('producto no encontrado en el cart', !product);
-
       if (!product) {
         cart.products.push({ productId: productId, quantity: quantity });
       } else {
@@ -54,7 +51,7 @@ class CartManager {
       const index = this.carts.findIndex((cart) => cart.id === cartId);
       this.carts[index] = cart;
 
-      await this.saveCart(carts);
+      await this.saveCart();
       return cart;
     } catch (error) {
       throw new Error(error);
@@ -76,7 +73,7 @@ class CartManager {
     }
   }
 
-  async saveCart(carts) {
+  async saveCart() {
     try {
       const objetoJSON = JSON.stringify(this.carts, null, 2);
       fs.writeFileSync(this.path, objetoJSON);

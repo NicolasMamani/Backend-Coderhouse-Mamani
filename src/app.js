@@ -20,5 +20,5 @@ app.use('/api', productsRouter);
 app.use('/api', cartsRouter);
 
 app.listen(PUERTO, () => {
-  console.log('Escuchando en el http://localhost:8080/api/products');
+  console.log('El servidor esta corriendo en el puerto ' + PUERTO);
 });

@@ -5,8 +5,6 @@ const manager = new CartManager('src/models/carrito.json');
 const ProductManager = require('../controllers/ProductManager');
 const productManager = new ProductManager('src/models/productos.json');
 
-// Rutas
-
 router.get('/carts', async (req, res) => {
   try {
     const carts = await manager.readFile();
@@ -41,8 +39,8 @@ router.post('/carts/:cid/product/:pid', async (req, res) => {
   const productId = parseInt(req.params.pid);
 
   // verificamos que el id pasado sea correcto
-  const productExiste = await productManager.getProductById(productId);
-  if (productExiste === 'Producto no encontrado') {
+  const foundProduct = await productManager.getProductById(productId);
+  if (foundProduct === 'Producto no encontrado') {
     res.status(500).json({ message: 'El producto con el id ingresado no existe' });
     return;
   }
