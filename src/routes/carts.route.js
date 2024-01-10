@@ -37,6 +37,7 @@ router.post('/carts', async (req, res) => {
 router.post('/carts/:cid/product/:pid', async (req, res) => {
   const cartId = parseInt(req.params.cid);
   const productId = parseInt(req.params.pid);
+  const quantity = req.body.quantity;
 
   // verificamos que el id pasado sea correcto
   const foundProduct = await productManager.getProductById(productId);
@@ -46,7 +47,7 @@ router.post('/carts/:cid/product/:pid', async (req, res) => {
   }
 
   try {
-    const cart = await manager.addProductToCart(cartId, productId);
+    const cart = await manager.addProductToCart(cartId, productId, quantity);
     res.status(201).json({ message: 'Producto agregado al carrito', cart: cart });
   } catch (error) {
     res.status(500).json({ message: error.message });
