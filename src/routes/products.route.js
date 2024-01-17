@@ -36,6 +36,11 @@ router.get('/products/:pid', async (req, res) => {
   }
 });
 
+// router.get('/realtimeproducts', (req, res) => {
+//   console.log('hola');
+//   res.render('index');
+// });
+
 router.post('/products', async (req, res) => {
   try {
     const productReq = req.body;
