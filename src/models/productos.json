@@ -2,6 +2,7 @@
   {
     "id": 0,
     "title": "producto prueba",
+    "status": true,
     "description": "Este es un producto prueba",
     "price": 200,
     "thumbnail": "Sin imagen",
@@ -11,6 +12,7 @@
   {
     "id": 1,
     "title": "arroz",
+    "status": true,
     "description": "Este es un producto de arroz",
     "price": 250,
     "thumbnail": "Sin imagen",
@@ -20,6 +22,7 @@
   {
     "id": 2,
     "title": "azucar",
+    "status": true,
     "description": "Este es un producto de un paquete de azucar",
     "price": 210,
     "thumbnail": "Sin imagen",
@@ -29,6 +32,7 @@
   {
     "id": 3,
     "title": "cereal",
+    "status": true,
     "description": "cereal",
     "price": 140,
     "thumbnail": "Sin imagen",
@@ -38,6 +42,7 @@
   {
     "id": 4,
     "title": "leche",
+    "status": true,
     "description": "Leche fresca",
     "price": 180,
     "thumbnail": "Sin imagen",
@@ -47,6 +52,7 @@
   {
     "id": 5,
     "title": "pan",
+    "status": true,
     "description": "Pan integral",
     "price": 120,
     "thumbnail": "Sin imagen",
@@ -56,6 +62,7 @@
   {
     "id": 6,
     "title": "huevos",
+    "status": true,
     "description": "Docena de huevos",
     "price": 280,
     "thumbnail": "Sin imagen",
@@ -65,6 +72,7 @@
   {
     "id": 7,
     "title": "pasta",
+    "status": true,
     "description": "Pasta de trigo",
     "price": 160,
     "thumbnail": "Sin imagen",
@@ -74,6 +82,7 @@
   {
     "id": 8,
     "title": "aceite",
+    "status": true,
     "description": "Aceite de oliva extra virgen",
     "price": 300,
     "thumbnail": "Sin imagen",
@@ -83,6 +92,7 @@
   {
     "id": 9,
     "title": "tomate",
+    "status": true,
     "description": "Tomates frescos",
     "price": 190,
     "thumbnail": "Sin imagen",
@@ -92,6 +102,7 @@
   {
     "id": 10,
     "title": "Mouse",
+    "status": true,
     "description": "Este es un mouse",
     "price": 220,
     "thumbnail": "Sin imagen",
