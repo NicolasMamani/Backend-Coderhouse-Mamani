@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const CartManager = require('../controllers/CartManager');
-const manager = new CartManager('src/models/carrito.json');
-const ProductManager = require('../controllers/ProductManager');
-const productManager = new ProductManager('src/models/productos.json');
+const CartManager = require('../dao/db/cart-manager-db');
+const manager = new CartManager();
+const ProductManager = require('../dao/db/product-manager-db');
+const productManager = new ProductManager();
 
 router.get('/carts', async (req, res) => {
   try {
-    const carts = await manager.readFile();
+    const carts = await manager;
     res.json(carts);
   } catch (error) {
     console.error('Fallo al obtener al carrillo');
@@ -17,7 +17,7 @@ router.get('/carts', async (req, res) => {
 
 router.get('/carts/:cid', async (req, res) => {
   try {
-    const cartId = parseInt(req.params.cid);
+    const cartId = req.params.cid;
     const cart = await manager.getCartById(cartId);
     res.status(200).json({ message: 'Carrito encontrado', cart: cart });
   } catch (error) {
@@ -35,18 +35,18 @@ router.post('/carts', async (req, res) => {
 });
 
 router.post('/carts/:cid/product/:pid', async (req, res) => {
-  const cartId = parseInt(req.params.cid);
-  const productId = parseInt(req.params.pid);
+  const cartId = req.params.cid;
+  const productId = req.params.pid;
   const quantity = req.body.quantity;
 
+  try {
   // verificamos que el id pasado sea correcto
   const foundProduct = await productManager.getProductById(productId);
-  if (foundProduct === 'Producto no encontrado') {
-    res.status(500).json({ message: 'El producto con el id ingresado no existe' });
-    return;
-  }
+  // if (foundProduct === 'Producto no encontrado') {
+  //   res.status(500).json({ message: 'El producto con el id ingresado no existe' });
+  //   return;
+  // }
 
-  try {
     const cart = await manager.addProductToCart(cartId, productId, quantity);
     res.status(201).json({ message: 'Producto agregado al carrito', cart: cart });
   } catch (error) {

@@ -1,12 +1,15 @@
 const PUERTO = 8080;
 const express = require('express');
-const ProductManager = require('./controllers/ProductManager');
+const ProductManager = require('./dao/fs/ProductManager.js');
 const productsRouter = require('./routes/products.route.js');
 const cartsRouter = require('./routes/carts.route.js');
 const viewRouter = require('./routes/view.route.js');
 const path = require('path');
 const socket = require('socket.io');
 const { engine } = require('express-handlebars');
+const MessageModel = require('./dao/models/message.model.js');
+require('./database.js');
+
 
 const manager = new ProductManager('./src/models/productos.json');
 
@@ -33,26 +36,17 @@ const httpServer = app.listen(PUERTO, () => {
   console.log('El servidor esta corriendo en el puerto ' + PUERTO);
 });
 
-const io = socket(httpServer); //esto es una instancia de socket
+// socket.io
 
-io.on('connection', async (socket) => {
-  console.log(`cliente conectado`);
-  const products = await manager.readFile();
-  socket.emit('products', products);
+const io = new socket.Server(httpServer); //note creamos una isntancia de socket
 
-  socket.on('deleteProduct', async (id) => {
-    await manager.deleteProduct(id);
-    const products = await manager.readFile();
-    socket.emit('products', products);
-  });
 
-  socket.on('addProduct', async (product) => {
-    try {
-      await manager.addProduct(product);
-      const products = await manager.readFile();
-      socket.emit('products', products);
-    } catch (error) {
-      console.log('Error al cargar producto');
-    }
+// establecemos la conexión
+
+io.on('connection', (socket) => {
+  socket.on('message', async(data) => {
+    await MessageModel.create(data);
+    const messages = await MessageModel.find();
+    io.sockets.emit('messagesLogs', messages);
   });
 });

@@ -1,0 +1,101 @@
+[
+  {
+    "title": "producto prueba",
+    "status": true,
+    "description": "Este es un producto prueba",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc123",
+    "stock": 25
+  },
+  {
+    "title": "arroz",
+    "status": true,
+    "description": "Este es un producto de arroz",
+    "price": 250,
+    "thumbnail": "Sin imagen",
+    "code": "arroz20",
+    "stock": 12
+  },
+  {
+    "title": "azucar",
+    "status": true,
+    "description": "Este es un producto de un paquete de azucar",
+    "price": 210,
+    "thumbnail": "Sin imagen",
+    "code": "azucar29",
+    "stock": 14
+  },
+  {
+    "title": "cereal",
+    "status": true,
+    "description": "cereal",
+    "price": 140,
+    "thumbnail": "Sin imagen",
+    "code": "cereal20",
+    "stock": 40
+  },
+  {
+    "title": "leche",
+    "status": true,
+    "description": "Leche fresca",
+    "price": 180,
+    "thumbnail": "Sin imagen",
+    "code": "leche123",
+    "stock": 30
+  },
+  {
+    "title": "pan",
+    "status": true,
+    "description": "Pan integral",
+    "price": 120,
+    "thumbnail": "Sin imagen",
+    "code": "pan456",
+    "stock": 20
+  },
+  {
+    "title": "huevos",
+    "status": true,
+    "description": "Docena de huevos",
+    "price": 280,
+    "thumbnail": "Sin imagen",
+    "code": "huevos789",
+    "stock": 15
+  },
+  {
+    "title": "pasta",
+    "status": true,
+    "description": "Pasta de trigo",
+    "price": 160,
+    "thumbnail": "Sin imagen",
+    "code": "pasta234",
+    "stock": 18
+  },
+  {
+    "title": "aceite",
+    "status": true,
+    "description": "Aceite de oliva extra virgen",
+    "price": 300,
+    "thumbnail": "Sin imagen",
+    "code": "aceite567",
+    "stock": 10
+  },
+  {
+    "title": "tomate",
+    "status": true,
+    "description": "Tomates frescos",
+    "price": 190,
+    "thumbnail": "Sin imagen",
+    "code": "tomate890",
+    "stock": 22
+  },
+  {
+    "title": "Mouse",
+    "status": true,
+    "description": "Este es un mouse",
+    "price": 220,
+    "thumbnail": "Sin imagen",
+    "code": "codigoNoPuesto111",
+    "stock": 12
+  }
+]
