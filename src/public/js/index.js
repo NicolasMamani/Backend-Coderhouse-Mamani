@@ -82,6 +82,15 @@ const socket = io();
 let user;
 
 const chatBox = document.getElementById('chatBox');
+const sendButton = document.getElementById('button-send');
+
+function sendMessage() {
+  if (chatBox.value.trim().length > 0) {
+    socket.emit('message', { user: user, message: chatBox.value });
+  }
+  chatBox.value = '';
+}
+
 
 // note sweet alert 2
 
@@ -97,20 +106,26 @@ Swal.fire({
 
 chatBox.addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
-    if (chatBox.value.trim().length > 0) {
-      socket.emit('message', { user: user, message: chatBox.value });
-    }
-    chatBox.value = '';
+    sendMessage(); 
   }
 });
 
-//listener de mensajes
+sendButton.addEventListener('click',()=>{
+  sendMessage();
+});
 
 socket.on('messagesLogs', (data) => {
   let log = document.getElementById('messagesLogs');
   let messages = '';
+
   data.forEach((message) => {
-    messages = messages + `${message.user} dice ${message.message} <br>`;
+    const messageClass = message.user === user ? 'user-message' : '';
+    messages += `<div class="chat-message ${messageClass}">
+                    <span class="message-user">${message.user}</span>
+                    <span>${message.message}</span>
+                 </div>`;
   });
+
   log.innerHTML = messages;
+  log.scrollTop = log.scrollHeight;
 });
