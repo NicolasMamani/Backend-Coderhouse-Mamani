@@ -6,10 +6,16 @@ const cartsRouter = require('./routes/carts.route.js');
 const viewRouter = require('./routes/view.route.js');
 const path = require('path');
 const socket = require('socket.io');
-const { engine } = require('express-handlebars');
+const { engine, create} = require('express-handlebars');
 const MessageModel = require('./dao/models/message.model.js');
 require('./database.js');
 
+const hbs = create({
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true
+  }
+});
 
 const manager = new ProductManager('./src/models/productos.json');
 
@@ -28,7 +34,7 @@ app.use('/api', productsRouter);
 app.use('/api', cartsRouter);
 app.use('/', viewRouter);
 
-app.engine('handlebars', engine());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, './views'));
 
