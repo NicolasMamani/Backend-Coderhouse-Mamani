@@ -34,7 +34,7 @@ router.post('/carts', async (req, res) => {
   }
 });
 
-router.post('/carts/:cid/product/:pid', async (req, res) => {
+router.post('/carts/:cid/products/:pid', async (req, res) => {
   const cartId = req.params.cid;
   const productId = req.params.pid;
   const quantity = req.body.quantity;
@@ -51,6 +51,64 @@ router.post('/carts/:cid/product/:pid', async (req, res) => {
     res.status(201).json({ message: 'Producto agregado al carrito', cart: cart });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+router.put('/carts/:cid/products/:pid', async(req,res)=>{
+  try {
+    const cartId = req.params.cid;
+    const productId = req.params.pid;
+    const quantity = req.body.quantity;
+    const foundProduct = await productManager.getProductById(productId);
+    if (foundProduct === 'Producto no encontrado') {
+      res.status(500).json({ message: 'El producto con el id ingresado no existe' });
+      return;
+    }
+    const cart = await manager.updateQuantityByProduct(cartId, productId, quantity);
+    res.status(200).json({cart});
+  } catch (error) {
+    res.status(500).json({message: error.message});
+  }
+});
+
+
+router.delete('/carts/:cid/products/:pid', async (req, res) => {
+  const cartId = req.params.cid;
+  const productId = req.params.pid;
+
+  try {
+  const foundProduct = await productManager.getProductById(productId);
+  if (foundProduct === 'Producto no encontrado') {
+    res.status(500).json({ message: 'El producto con el id ingresado no existe' });
+    return;
+  }
+  
+  manager.deleteProductToCart(cartId,productId);
+  res.status(204).json({message: 'producto eliminado correctamente'});
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put('/carts/:cid',async(req,res)=>{
+  try {
+    const cartId = req.params.cid;
+    const products = req.body;
+    await manager.updateCartbyId(cartId, products);
+    res.status(200).json({message: 'carrito actualizado correctamente'});
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+});
+
+router.delete('/carts/:cid',async(req,res)=>{
+  try {
+    const cartId = req.params.cid;
+    const cart = await manager.deleteProductsByCart(cartId);
+    res.status(200).json({cart});
+  } catch (error) {
+    res.status(500).json({error:error.message})
+    throw new Error({error: error.message});
   }
 });
 
