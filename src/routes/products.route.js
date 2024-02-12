@@ -6,18 +6,23 @@ const manager = new ProductManager();
 // get para productos con limit
 router.get('/products', async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit);
-    let products = [];
-    if (limit) {
-      let limitedArray = [];
-      for (let i = 0; i < limit; i++) {
-        limitedArray.push(products[i]);
-      }
-      return res.send(limitedArray);
-    }else{
-      products = await manager.getProducts();
-    }
-    return res.send(products);
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const queryParam = req.query.query || null
+    const query =queryParam ? JSON.parse(queryParam) : {};
+    const sort = parseInt(req.query.sort) || null;
+    const products = await manager.getProducts(limit, page, query, sort);
+    console.log('estamos en products.route.js');
+    console.log(products);
+    res.json({
+      status: 'success',
+      ...products
+    })
+    // res.json({e
+    //   status: res.status(200),
+    //   products
+    // });
+    // return res.send(products);
   } catch (error) {
     res.status(500).json('Error interno del servidor: '+ error);
   }

@@ -39,10 +39,66 @@ class ProductManager {
         }
         }
 
-    async getProducts(){
+    async getProducts(limit, page, query, sort){
         try{
-            const products = await ProductModel.find();
-            return products;
+            let products = '';
+            let prevLink = '';
+            let nextLink = '';
+            
+            if(sort) {
+                products = await ProductModel.paginate(
+                    query, //busqueda general creo que seria {} onda un objeto vacio
+                    {   
+                        limit,
+                        page,
+                        sort:{
+                            price: sort
+                        }
+                    }
+                    );
+                prevLink = products.hasPrevPage
+                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.prevPage}&sort=${sort}&query=${JSON.stringify(query)}`
+                :null;
+    
+                nextLink = products.hasNextPage 
+                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.nextPage}&sort=${sort}&query=${JSON.stringify(query)}`
+                :null;
+            }else {
+                products = await ProductModel.paginate(
+                    query, //busqueda general creo que seria {} onda un objeto vacio
+                    {   
+                        limit,
+                        page
+                    }
+                    );
+                prevLink = products.hasPrevPage
+                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.prevPage}&query=${JSON.stringify(query)}`
+                :null;
+    
+                nextLink = products.hasNextPage 
+                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.nextPage}&query=${JSON.stringify(query)}`
+                :null;
+            }
+            // products.map(product => console.log(product.price));
+            // console.log(products);
+            // if(Array.isArray(products.docs)){
+            //     products.docs.map(product => console.log(product.price));
+            // }else{
+            //     console.log('no es un array');
+            // }
+            //note: urls para dirigir a pagina anterior y siguiente
+
+            return {
+                payload:products.docs,
+                totalPages: products.totalPages,
+                prevPages: products.prevPage || null,
+                nextPages: products.nextPage || null,
+                page: products.page,
+                hasPrevPage: products.hasPrevPage,
+                hasNextPage: products.hasNextPage,
+                prevLink,
+                nextLink,
+            };
         }catch(error){
             throw new Error(error);
         }

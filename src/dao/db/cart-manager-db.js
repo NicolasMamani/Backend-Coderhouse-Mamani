@@ -39,6 +39,24 @@ class CartManager {
             throw new Error('error al agregar producto en el cart', error);
         }
     }
+
+    async deleteProductToCart(cartId, productId) {
+        try {
+            const cart = await this.getCartById(cartId);
+            const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
+
+            if (productIndex !== -1) {
+            // Si se encuentra el producto, eliminarlo del array
+                cart.products.splice(productIndex, 1);
+                cart.markModified('products');
+                await cart.save();
+        }else {
+            throw new Error('El producto no existe en el carrito');
+            }
+        } catch (error) {
+            throw new Error('error al eliminar producto en el cart', error);
+        }
+    }
 }
 
 module.exports = CartManager;

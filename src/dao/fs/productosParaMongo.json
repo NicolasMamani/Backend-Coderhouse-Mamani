@@ -1,101 +1,112 @@
 [
   {
-    "title": "producto prueba",
+    "title": "Monitor",
     "status": true,
-    "description": "Este es un producto prueba",
-    "price": 200,
+    "description": "Monitor LED Full HD",
+    "price": 350,
     "thumbnail": "Sin imagen",
-    "code": "abc123",
-    "stock": 25
+    "code": "monitor123",
+    "stock": 18,
+    "category": "monitores-y-pantallas"
   },
   {
-    "title": "arroz",
+    "title": "Notebook Acer Advance",
     "status": true,
-    "description": "Este es un producto de arroz",
-    "price": 250,
+    "description": "Notebook ultradelgada con SSD",
+    "price": 800,
     "thumbnail": "Sin imagen",
-    "code": "arroz20",
-    "stock": 12
+    "code": "notebook456",
+    "stock": 10,
+    "category": "laptops-y-portatiles"
   },
   {
-    "title": "azucar",
+    "title": "Samsung A50",
     "status": true,
-    "description": "Este es un producto de un paquete de azucar",
-    "price": 210,
+    "description": "Smartphone de última generación de marca Samsung",
+    "price": 600,
     "thumbnail": "Sin imagen",
-    "code": "azucar29",
-    "stock": 14
+    "code": "celular789",
+    "stock": 15,
+    "category": "telefonos-moviles"
   },
   {
-    "title": "cereal",
+    "title": "Motorola g86",
     "status": true,
-    "description": "cereal",
-    "price": 140,
+    "description": "Smartphone de alta gama de marca Motorola",
+    "price": 800,
     "thumbnail": "Sin imagen",
-    "code": "cereal20",
-    "stock": 40
+    "code": "moto-456",
+    "stock": 9,
+    "category": "telefonos-moviles"
   },
   {
-    "title": "leche",
+    "title": "Teclado T-dagger",
     "status": true,
-    "description": "Leche fresca",
-    "price": 180,
-    "thumbnail": "Sin imagen",
-    "code": "leche123",
-    "stock": 30
-  },
-  {
-    "title": "pan",
-    "status": true,
-    "description": "Pan integral",
+    "description": "Teclado mecánico para gaming de la marca t-dagger",
     "price": 120,
     "thumbnail": "Sin imagen",
-    "code": "pan456",
-    "stock": 20
+    "code": "teclado234",
+    "stock": 25,
+    "category": "perifericos-computadora"
   },
   {
-    "title": "huevos",
+    "title": "Ratón Redragon",
     "status": true,
-    "description": "Docena de huevos",
-    "price": 280,
+    "description": "Ratón gamer de la marca Redragon",
+    "price": 100,
     "thumbnail": "Sin imagen",
-    "code": "huevos789",
-    "stock": 15
+    "code": "raton567",
+    "stock": 21,
+    "category": "perifericos-computadora"
   },
   {
-    "title": "pasta",
+    "title": "Auriculares Redragon",
     "status": true,
-    "description": "Pasta de trigo",
-    "price": 160,
+    "description": "Auriculares con cancelación de ruido de la marca redragon",
+    "price": 150,
     "thumbnail": "Sin imagen",
-    "code": "pasta234",
-    "stock": 18
+    "code": "auriculares890",
+    "stock": 17,
+    "category": "perifericos-computadora"
   },
   {
-    "title": "aceite",
+    "title": "Cámara",
     "status": true,
-    "description": "Aceite de oliva extra virgen",
-    "price": 300,
+    "description": "Cámara digital de alta resolución",
+    "price": 400,
     "thumbnail": "Sin imagen",
-    "code": "aceite567",
-    "stock": 10
+    "code": "camara111",
+    "stock": 12,
+    "category": "fotografía"
   },
   {
-    "title": "tomate",
+    "title": "Impresora",
     "status": true,
-    "description": "Tomates frescos",
-    "price": 190,
+    "description": "Impresora multifuncional a color",
+    "price": 250,
     "thumbnail": "Sin imagen",
-    "code": "tomate890",
-    "stock": 22
+    "code": "impresora222",
+    "stock": 18,
+    "category": "impresoras"
   },
   {
-    "title": "Mouse",
+    "title": "Tablet",
     "status": true,
-    "description": "Este es un mouse",
-    "price": 220,
+    "description": "Tablet con pantalla táctil",
+    "price": 180,
     "thumbnail": "Sin imagen",
-    "code": "codigoNoPuesto111",
-    "stock": 12
+    "code": "tablet333",
+    "stock": 15,
+    "category": "tablets"
+  },
+  {
+    "title": "Reloj Inteligente",
+    "status": true,
+    "description": "Reloj inteligente con monitor de actividad",
+    "price": 100,
+    "thumbnail": "Sin imagen",
+    "code": "reloj444",
+    "stock": 22,
+    "category": "relojes"
   }
 ]
