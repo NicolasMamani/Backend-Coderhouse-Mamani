@@ -34,6 +34,8 @@ app.use('/api', productsRouter);
 app.use('/api', cartsRouter);
 app.use('/', viewRouter);
 
+hbs.handlebars.registerHelper('multiply', (a, b) => a * b);
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, './views'));

@@ -12,17 +12,11 @@ router.get('/products', async (req, res) => {
     const query =queryParam ? JSON.parse(queryParam) : {};
     const sort = parseInt(req.query.sort) || null;
     const products = await manager.getProducts(limit, page, query, sort);
-    console.log('estamos en products.route.js');
-    console.log(products);
     res.json({
       status: 'success',
       ...products
     })
-    // res.json({e
-    //   status: res.status(200),
-    //   products
-    // });
-    // return res.send(products);
+    
   } catch (error) {
     res.status(500).json('Error interno del servidor: '+ error);
   }

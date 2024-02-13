@@ -39,7 +39,7 @@ class ProductManager {
         }
         }
 
-    async getProducts(limit, page, query, sort){
+    async getProducts(limit=10, page=1, query={}, sort=null){
         try{
             let products = '';
             let prevLink = '';
@@ -57,11 +57,11 @@ class ProductManager {
                     }
                     );
                 prevLink = products.hasPrevPage
-                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.prevPage}&sort=${sort}&query=${JSON.stringify(query)}`
+                ? `?limit=${limit}&page=${products.prevPage}&sort=${sort}&query=${JSON.stringify(query)}`
                 :null;
     
                 nextLink = products.hasNextPage 
-                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.nextPage}&sort=${sort}&query=${JSON.stringify(query)}`
+                ? `?limit=${limit}&page=${products.nextPage}&sort=${sort}&query=${JSON.stringify(query)}`
                 :null;
             }else {
                 products = await ProductModel.paginate(
@@ -72,11 +72,11 @@ class ProductManager {
                     }
                     );
                 prevLink = products.hasPrevPage
-                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.prevPage}&query=${JSON.stringify(query)}`
+                ? `?limit=${limit}&page=${products.prevPage}&query=${JSON.stringify(query)}`
                 :null;
     
                 nextLink = products.hasNextPage 
-                ? `http://localhost:8080/api/products?limit=${limit}&page=${products.nextPage}&query=${JSON.stringify(query)}`
+                ? `?limit=${limit}&page=${products.nextPage}&query=${JSON.stringify(query)}`
                 :null;
             }
             // products.map(product => console.log(product.price));

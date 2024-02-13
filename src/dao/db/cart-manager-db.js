@@ -16,11 +16,11 @@ class CartManager {
     }
     async getCartById(id){
     try {
-        const cart = await CartModel.findById(id);
+        const cart = await CartModel.findById(id).populate('products.product');
         if(!cart) throw new Error('no existe el carrito con el id solicitado');
         return cart;
     } catch (error) {
-        throw new Error('Error al traer el carrito: ', error);
+        throw new Error(error);
     }
     }
     async addProductToCart(id, productId, quantity = 1){
