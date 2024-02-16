@@ -1,27 +1,49 @@
-<div id='product__container'>
-</div>
+{{>navbar}}
 
-<form>
-  <label for='title'>Titulo</label>
-  <input type='text' id='form-title' />
-  <label for=''>Estado</label>
-  <select id='form-select'>
-    <option value='true'>Verdadero</option>
-    <option value='false'>Falso</option>
-  </select>
-  <label>Categoria</label>
-  <input type='text' id='form-category' />
-  <label>Descripción</label>
-  <input type='text' id='form-description' />
-  <label>Precio</label>
-  <input type='text' id='form-price' />
-  <label>Código</label>
-  <input type='text' id='form-code' />
-  <label>Stock</label>
-  <input type='number' id='form-stock' />
+<form class="container" style="color: white">
+  <div class="form-group">
+    <label for="form-title">Titulo</label>
+    <input type="text" class="form-control" id="form-title">
+  </div>
 
-  <button id='submit-button'>Enviar</button>
+  <div class="form-group">
+    <label for="form-select">Estado</label>
+    <select class="form-control" id="form-select">
+      <option value="true">Verdadero</option>
+      <option value="false">Falso</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="form-category">Categoria</label>
+    <input type="text" class="form-control" id="form-category">
+  </div>
+
+  <div class="form-group">
+    <label for="form-description">Descripción</label>
+    <input type="text" class="form-control" id="form-description">
+  </div>
+
+  <div class="form-group">
+    <label for="form-price">Precio</label>
+    <input type="text" class="form-control" id="form-price">
+  </div>
+
+  <div class="form-group">
+    <label for="form-code">Código</label>
+    <input type="text" class="form-control" id="form-code">
+  </div>
+
+  <div class="form-group">
+    <label for="form-stock">Stock</label>
+    <input type="number" class="form-control" id="form-stock">
+  </div>
+
+  <button type="submit" class="btn-customize mt-4" id="submit-button">Enviar</button>
 </form>
+
+<div id='product__container' class="product-list">
+</div>
 
 <script
   src='https://cdn.socket.io/4.7.3/socket.io.min.js'

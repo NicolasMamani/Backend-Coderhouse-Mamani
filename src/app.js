@@ -1,6 +1,7 @@
 const PUERTO = 8080;
 const express = require('express');
-const ProductManager = require('./dao/fs/ProductManager.js');
+const ProductManager = require('./dao/db/product-manager-db.js');
+const productManager = new ProductManager('');
 const productsRouter = require('./routes/products.route.js');
 const cartsRouter = require('./routes/carts.route.js');
 const viewRouter = require('./routes/view.route.js');
@@ -8,6 +9,7 @@ const path = require('path');
 const socket = require('socket.io');
 const { engine, create} = require('express-handlebars');
 const MessageModel = require('./dao/models/message.model.js');
+
 require('./database.js');
 
 const hbs = create({
@@ -17,7 +19,6 @@ const hbs = create({
   }
 });
 
-const manager = new ProductManager('./src/models/productos.json');
 
 // creamos el servidor
 const app = express();
@@ -51,10 +52,34 @@ const io = new socket.Server(httpServer); //note creamos una isntancia de socket
 
 // establecemos la conexión
 
-io.on('connection', (socket) => {
-  socket.on('message', async(data) => {
-    await MessageModel.create(data);
-    const messages = await MessageModel.find();
-    io.sockets.emit('messagesLogs', messages);
+// io.on('connection', (socket) => {
+//   socket.on('message', async(data) => {
+//     await MessageModel.create(data);
+//     const messages = await MessageModel.find();
+//     io.sockets.emit('messagesLogs', messages);
+//   });
+// });
+
+
+io.on('connection', async (socket) => {
+  console.log(`cliente conectado`);
+  const products = await productManager.getProducts();
+  console.log(products.payload);
+  socket.emit('products', {products: products.payload});
+
+  // socket.on('deleteProduct', async (id) => {
+  //   await productManager.deleteProduct(id);
+  //   const products = await productManager.getProducts();
+  //   io.sockets.emit('products', products);
+  // });
+
+  socket.on('addProduct', async (product) => {
+    try {
+      await productManager.addProduct(product);
+      const products = await productManager.getProducts();
+      io.sockets.emit('products', products);
+    } catch (error) {
+      console.log('Error al cargar producto');
+    }
   });
 });
