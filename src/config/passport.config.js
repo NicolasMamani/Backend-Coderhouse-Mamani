@@ -22,6 +22,7 @@ const initializePassword = ()=>{
                     email,
                     age,
                     password: createHash(password),
+                    role: 'user'
                 }
                 const result = await UserModel.create(newUser);
                 return done(null, result);
@@ -35,7 +36,6 @@ const initializePassword = ()=>{
             async (email, password, done)=>{
                 try {
                     const userExists = await UserModel.findOne({email});
-                    console.log(userExists);
                     if(!userExists) return done(null, false);
                     if(!isValidPassword(password, userExists)) return done(null, false);
                     return done(null, userExists);

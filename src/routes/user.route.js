@@ -37,15 +37,8 @@ router.post('/',passport.authenticate('register',{
     failureRedirect: '/failedregister'
 }), async(req, res)=>{
     if(!req.user) return res.status(400).send({status: 'error', message: 'credenciales invalidas'});
-    
-    req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        email: req.user.email,
-        age: req.user.age,
-    };
-    req.session.login = true;
-    res.redirect('/products');
+
+    res.redirect('/login');
 });
 
 router.get('failedregister', (req, res)=>{
