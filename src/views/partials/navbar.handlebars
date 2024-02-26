@@ -6,5 +6,11 @@
         <a href="http://localhost:8080/products" class="nav-item">Productos</a>
         <a href="http://localhost:8080/chat" class="nav-item">Chat</a>
         <a href="#" class="nav-item">Sobre Nosotros</a>
+        {{#if user}}
+            <a href="/api/sessions/logout" class="nav-item">Cerrar Sesión</a>
+        {{else}}
+            <a href="/api/sessions/logout" class="nav-item">Iniciar Sesión</a>
+        {{/if}}
+    
     </div>
 </nav>

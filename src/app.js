@@ -9,6 +9,8 @@ const { engine, create} = require('express-handlebars');
 const MessageModel = require('./dao/models/message.model.js');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const initializePassword = require('./config/passport.config.js');
 require('./database.js');
 
 const hbs = create({
@@ -46,6 +48,9 @@ app.use('/api', cartsRouter);
 app.use('/', viewRouter);
 app.use('/api/users', userRouter);
 app.use('/api/sessions', sessionRouter);
+initializePassword();
+app.use(passport.initialize());
+app.use(passport.session());
 
 hbs.handlebars.registerHelper('multiply', (a, b) => a * b);
 
