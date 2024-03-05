@@ -5,7 +5,7 @@ const productManager = new ProductManager('');
 const { productsRouter,cartsRouter,viewRouter,userRouter,sessionRouter} = require('./routes');
 const path = require('path');
 const socket = require('socket.io');
-const { engine, create} = require('express-handlebars');
+const { engine, create } = require('express-handlebars');
 const MessageModel = require('./dao/models/message.model.js');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -38,7 +38,7 @@ app.use(session({
   //el ttl esta en segundos, retries es la cantidad de veces que el servidor tratara de leer el archivo
   store: MongoStore.create({
       mongoUrl: 'mongodb+srv://nico:coderhouse@cluster0.bgaiwth.mongodb.net/ecommerce?retryWrites=true&w=majority',
-      ttl: 90
+      ttl: 100
   })
 }));
 
