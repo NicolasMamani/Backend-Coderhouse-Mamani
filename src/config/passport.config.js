@@ -5,6 +5,8 @@ const UserModel = require('../dao/models/user.model');
 const { createHash , isValidPassword } = require('../utils/hashBcrypt');
 const LocalStrategy = local.Strategy;
 const GitHubStrategy = require('passport-github2');
+const CartManager = require('../dao/db/cart-manager-db');
+const cartManager = new CartManager();
 
 const initializePassword = ()=>{
     passport.use('register', new LocalStrategy({
@@ -16,11 +18,15 @@ const initializePassword = ()=>{
             try {
                 const userExists = await UserModel.findOne({email});
                 if(userExists) return done(null, false);
+
+                const newCart = await cartManager.createCart();
+
                 const newUser = {
                     first_name,
                     last_name,
                     email,
                     age,
+                    cart: newCart._id,
                     password: createHash(password),
                     role: 'user'
                 }
