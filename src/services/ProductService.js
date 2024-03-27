@@ -44,6 +44,7 @@ class ProductService {
             let products = '';
             let prevLink = '';
             let nextLink = '';
+
             
             if(sort) {
                 products = await productModel.paginate(
