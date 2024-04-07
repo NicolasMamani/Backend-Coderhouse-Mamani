@@ -1,8 +1,15 @@
-const PUERTO = 8080;
+const configObject = require('./config/config');
+const { PUERTO } = configObject;
 const express = require('express');
 const ProductManager = require('./dao/db/product-manager-db.js');
 const productManager = new ProductManager('');
-const { productsRouter,cartsRouter,viewRouter,userRouter,sessionRouter} = require('./routes');
+const {
+    productsRouter,
+    cartsRouter,
+    viewRouter,
+    userRouter,
+    sessionRouter,
+} = require('./routes');
 const path = require('path');
 const socket = require('socket.io');
 const { engine, create } = require('express-handlebars');
@@ -14,12 +21,11 @@ const initializePassword = require('./config/passport.config.js');
 require('./database.js');
 
 const hbs = create({
-  runtimeOptions: {
-    allowProtoPropertiesByDefault: true,
-    allowProtoMethodsByDefault: true
-  }
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
 });
-
 
 // creamos el servidor
 const app = express();
@@ -30,17 +36,20 @@ app.use(express.static('./src/public'));
 //Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(session({
-  secret: 'secretCoder', //note: valor para firmar cookie
-  resave: true,
-  saveUninitialized: true,
-  // store: new fileStore({path: './src/sessions', ttl: 50, retries: 1}) 
-  //el ttl esta en segundos, retries es la cantidad de veces que el servidor tratara de leer el archivo
-  store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://nico:coderhouse@cluster0.bgaiwth.mongodb.net/ecommerce?retryWrites=true&w=majority',
-      ttl: 100
-  })
-}));
+app.use(
+    session({
+        secret: 'secretCoder', //note: valor para firmar cookie
+        resave: true,
+        saveUninitialized: true,
+        // store: new fileStore({path: './src/sessions', ttl: 50, retries: 1})
+        //el ttl esta en segundos, retries es la cantidad de veces que el servidor tratara de leer el archivo
+        store: MongoStore.create({
+            mongoUrl:
+                'mongodb+srv://nico:coderhouse@cluster0.bgaiwth.mongodb.net/ecommerce?retryWrites=true&w=majority',
+            ttl: 100,
+        }),
+    })
+);
 
 // rutas
 app.use('/api', productsRouter);
@@ -59,13 +68,12 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, './views'));
 
 const httpServer = app.listen(PUERTO, () => {
-  console.log('El servidor esta corriendo en el puerto ' + PUERTO);
+    console.log('El servidor esta corriendo en el puerto ' + PUERTO);
 });
 
 // socket.io
 
 const io = new socket.Server(httpServer); //note creamos una isntancia de socket
-
 
 // establecemos la conexión
 
@@ -77,26 +85,25 @@ const io = new socket.Server(httpServer); //note creamos una isntancia de socket
 //   });
 // });
 
-
 io.on('connection', async (socket) => {
-  console.log(`cliente conectado`);
-  const products = await productManager.getProducts();
-  console.log(products.payload);
-  socket.emit('products', {products: products.payload});
+    console.log(`cliente conectado`);
+    const products = await productManager.getProducts();
+    console.log(products.payload);
+    socket.emit('products', { products: products.payload });
 
-  // socket.on('deleteProduct', async (id) => {
-  //   await productManager.deleteProduct(id);
-  //   const products = await productManager.getProducts();
-  //   io.sockets.emit('products', products);
-  // });
+    // socket.on('deleteProduct', async (id) => {
+    //   await productManager.deleteProduct(id);
+    //   const products = await productManager.getProducts();
+    //   io.sockets.emit('products', products);
+    // });
 
-  socket.on('addProduct', async (product) => {
-    try {
-      await productManager.addProduct(product);
-      const products = await productManager.getProducts();
-      io.sockets.emit('products', products);
-    } catch (error) {
-      console.log('Error al cargar producto');
-    }
-  });
+    socket.on('addProduct', async (product) => {
+        try {
+            await productManager.addProduct(product);
+            const products = await productManager.getProducts();
+            io.sockets.emit('products', products);
+        } catch (error) {
+            console.log('Error al cargar producto');
+        }
+    });
 });
