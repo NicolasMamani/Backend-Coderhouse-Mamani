@@ -45,17 +45,6 @@ const initializePassword = () => {
             { usernameField: 'email' },
             async (email, password, done) => {
                 try {
-                    if (
-                        email === 'adminCoder@coder.com' &&
-                        password === 'adminCod3r123'
-                    ) {
-                        const adminUser = {
-                            email: 'adminCoder@coder.com',
-                            // Puedes agregar más información si lo necesitas
-                            role: 'admin',
-                        };
-                        return done(null, adminUser);
-                    }
                     const userExists = await UserModel.findOne({ email });
                     if (!userExists) return done(null, false);
                     if (!isValidPassword(password, userExists))

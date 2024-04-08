@@ -8,13 +8,13 @@ const { adminEmail, adminPassword } = require('../config/config');
 const isAdmin = (req, res, next) => {
     const { email, password } = req.body;
     const adminUser = {
-        username: 'Admin',
-        first_name: 'Admin',
-        last_name: 'Admin',
+        username: 'admin',
+        first_name: 'admin',
+        last_name: 'admin',
         age: 'Private',
         email: adminEmail,
         password: adminPassword,
-        role: 'Admin',
+        role: 'admin',
     };
     if (email === adminEmail && password === adminPassword) {
         req.session.login = true;
@@ -33,6 +33,8 @@ router.post(
     }),
     (req, res) => sessionController.login(req, res)
 );
+
+router.get('/profile', (req, res) => sessionController.profile(req, res));
 
 router.get('/logout', (req, res) => sessionController.logout(req, res));
 
