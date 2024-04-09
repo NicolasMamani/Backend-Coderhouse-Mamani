@@ -1,8 +1,12 @@
 const configObject = require('./config/config');
 const { PUERTO } = configObject;
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const ProductManager = require('./dao/db/product-manager-db.js');
 const productManager = new ProductManager('');
+const ProductService = require('./services/ProductService');
+const productService = new ProductService();
+
 const {
     productsRouter,
     cartsRouter,
@@ -36,30 +40,31 @@ app.use(express.static('./src/public'));
 //Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-    session({
-        secret: 'secretCoder', //note: valor para firmar cookie
-        resave: true,
-        saveUninitialized: true,
-        // store: new fileStore({path: './src/sessions', ttl: 50, retries: 1})
-        //el ttl esta en segundos, retries es la cantidad de veces que el servidor tratara de leer el archivo
-        store: MongoStore.create({
-            mongoUrl:
-                'mongodb+srv://nico:coderhouse@cluster0.bgaiwth.mongodb.net/ecommerce?retryWrites=true&w=majority',
-            ttl: 100,
-        }),
-    })
-);
+app.use(cookieParser());
+// app.use(
+//     session({
+//         secret: 'secretCoder', //note: valor para firmar cookie
+//         resave: true,
+//         saveUninitialized: true,
+//         // store: new fileStore({path: './src/sessions', ttl: 50, retries: 1})
+//         //el ttl esta en segundos, retries es la cantidad de veces que el servidor tratara de leer el archivo
+//         store: MongoStore.create({
+//             mongoUrl:
+//                 'mongodb+srv://nico:coderhouse@cluster0.bgaiwth.mongodb.net/ecommerce?retryWrites=true&w=majority',
+//             ttl: 100,
+//         }),
+//     })
+// );
 
 // rutas
 app.use('/api', productsRouter);
 app.use('/api', cartsRouter);
 app.use('/', viewRouter);
 app.use('/api/users', userRouter);
-app.use('/api/sessions', sessionRouter);
-initializePassword();
+// app.use('/api/sessions', sessionRouter);
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
+initializePassword();
 
 hbs.handlebars.registerHelper('multiply', (a, b) => a * b);
 
@@ -86,24 +91,31 @@ const io = new socket.Server(httpServer); //note creamos una isntancia de socket
 // });
 
 io.on('connection', async (socket) => {
-    console.log(`cliente conectado`);
-    const products = await productManager.getProducts();
-    console.log(products.payload);
+    const limit = 30;
+    const products = await productManager.getProducts(limit);
+
     socket.emit('products', { products: products.payload });
 
-    // socket.on('deleteProduct', async (id) => {
-    //   await productManager.deleteProduct(id);
-    //   const products = await productManager.getProducts();
-    //   io.sockets.emit('products', products);
-    // });
+    socket.on('deleteProduct', async (id) => {
+        await productManager.deleteProduct(id);
+        const products = await productManager.getProducts();
+        io.sockets.emit('products', products);
+    });
 
     socket.on('addProduct', async (product) => {
         try {
             await productManager.addProduct(product);
             const products = await productManager.getProducts();
-            io.sockets.emit('products', products);
+            io.sockets.emit('products', { products: products.payload });
         } catch (error) {
             console.log('Error al cargar producto');
         }
+    });
+
+    socket.on('updateProduct', async ({ id, product }) => {
+        console.log({ id, product });
+        await productService.updateProduct(id, product);
+        const products = await productService.getProducts;
+        io.sockets.emit('products', products);
     });
 });

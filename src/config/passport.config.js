@@ -1,6 +1,7 @@
 //note: importamos
 const passport = require('passport');
 const local = require('passport-local');
+const jwt = require('passport-jwt');
 const UserModel = require('../dao/models/user.model');
 const { createHash, isValidPassword } = require('../utils/hashBcrypt');
 const LocalStrategy = local.Strategy;
@@ -8,7 +9,22 @@ const GitHubStrategy = require('passport-github2');
 const CartManager = require('../dao/db/cart-manager-db');
 const cartManager = new CartManager();
 
+const JWTStrategy = jwt.Strategy;
+const ExtractJwt = jwt.ExtractJwt;
+
 const initializePassword = () => {
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: 'nicolasmamanicoderhouseprivatekey'
+    }, async (jwt_payload, done) => {
+        try {
+            return done(null, jwt_payload);
+        }catch(error){
+            return done(error);
+        }
+    }
+    ));
+
     passport.use(
         'register',
         new LocalStrategy(
@@ -101,5 +117,15 @@ const initializePassword = () => {
         )
     );
 };
+
+// creamos el cookie cookieExtractor
+const cookieExtractor = req => {
+    let token = null;
+    if(req && req.cookies){
+        token = req.cookies['coderCookieToken'];
+    }
+    return token;
+}
+
 
 module.exports = initializePassword;
