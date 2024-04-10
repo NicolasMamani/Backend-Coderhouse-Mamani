@@ -94,6 +94,11 @@ class UserController {
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
             });
+
+            const cartId = userExist.cart.toString();
+            res.cookie('cart', cartId, {
+                maxAge: 24 * 60 * 60 * 1000,
+            });
         }
         // res.json({ message: 'logeado correctamente' });
         res.redirect('/products');

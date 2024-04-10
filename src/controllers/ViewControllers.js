@@ -30,7 +30,6 @@ class ViewController {
                 token,
                 'nicolasmamanicoderhouseprivatekey'
             );
-            console.log({ decoded });
             let userDto = new UserDTO(
                 decoded.first_name,
                 decoded.last_name,
@@ -89,12 +88,28 @@ class ViewController {
             const thumbnail1 = product.thumbnail[1];
             const thumbnail2 = product.thumbnail[2];
             const thumbnail3 = product.thumbnail[3];
+
+            const token = req.cookies.coderCookieToken;
+            const decoded = jwt.verify(
+                token,
+                'nicolasmamanicoderhouseprivatekey'
+            );
+
+            let userDto = new UserDTO(
+                decoded.first_name,
+                decoded.last_name,
+                decoded.role,
+                decoded.age,
+                decoded.email
+            );
+
             res.render('product', {
                 product,
                 thumbnail0,
                 thumbnail1,
                 thumbnail2,
                 thumbnail3,
+                user: userDto,
                 style: '../css/style.css',
                 title: 'Detalle de producto',
             });
@@ -107,8 +122,24 @@ class ViewController {
         try {
             const cartId = req.params.cid;
             const { products } = await cartService.getCartById(cartId);
-            console.log(products);
-            res.render('cart', { products, style: '../css/style.css' });
+            const token = req.cookies.coderCookieToken;
+            const decoded = jwt.verify(
+                token,
+                'nicolasmamanicoderhouseprivatekey'
+            );
+            console.log({ decoded });
+            let userDto = new UserDTO(
+                decoded.first_name,
+                decoded.last_name,
+                decoded.role,
+                decoded.age,
+                decoded.email
+            );
+            res.render('cart', {
+                products,
+                style: '../css/style.css',
+                user: userDto,
+            });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

@@ -3,12 +3,21 @@
             style='text-decoration: none;'
             href='http://localhost:8080/products'
         >ElectroShop</a></p>
+    {{#if user}}
+        <div style='color: #fff'>Usuario:
+            {{user.firstName}}
+            {{user.lastName}}</div>
+    {{/if}}
     <button class='open-menu'>abrir</button>
     <div class='nav-items' id='nav'>
         <button class='close-menu'>cerrar</button>
         <a href='http://localhost:8080/products' class='nav-item'>Productos</a>
         <a href='http://localhost:8080/chat' class='nav-item'>Chat</a>
-        <a href='#' class='nav-item'>Sobre Nosotros</a>
+        <a
+            href=''
+            class='nav-item btn-cart'
+            style='text-decoration: none'
+        >Carrito</a>
         {{#if user}}
             <a href='/api/users/logout' class='nav-item'>Cerrar Sesión</a>
         {{else}}
@@ -16,3 +25,9 @@
         {{/if}}
     </div>
 </nav>
+<script
+    src='
+https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js
+'
+></script>
+<script src='../js/navbar.js'></script>

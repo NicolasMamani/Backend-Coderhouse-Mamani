@@ -37,16 +37,21 @@ class CartController {
         const productId = req.params.pid;
         const quantity = req.body.quantity;
         try {
-            const foundProduct = await productService.getProductById(productId);
-            const cart = await cartService.addProductToCart(
+            const { cart, productExists } = await cartService.addProductToCart(
                 cartId,
                 productId,
                 quantity
             );
-            res.status(201).json({
-                message: 'Producto agregado al carrito',
-                cart: cart,
-            });
+            if (productExists) {
+                res.status(200).json({
+                    message: 'El producto se actualizo en el carrito',
+                });
+            } else {
+                res.status(201).json({
+                    message: 'Producto agregado al carrito',
+                    cart: cart,
+                });
+            }
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
