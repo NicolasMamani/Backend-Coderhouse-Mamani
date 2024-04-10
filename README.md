@@ -29,6 +29,9 @@ npm run dev
 Para crear la variable de entorno debes dirigirte a la raíz del proyecto y crear un archivo `.env.development`
 ```
 MONGO_URL=mongodb+srv://nico:coderhouse@cluster0.bgaiwth.mongodb.net/ecommerce?retryWrites=true&w=majority
+ADMIN_EMAIL=adminCoder@coder.com
+ADMIN_PASSWORD=adminCod3r123
+PUERTO=8080
 ```
 
 <!-- ## Endpoints
